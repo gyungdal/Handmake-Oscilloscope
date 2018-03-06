@@ -30,6 +30,7 @@ Makefile*
 
 *.autosave
 
+
 # QtCtreator Qml
 *.qmlproject.user
 *.qmlproject.user.*
@@ -37,3 +38,6 @@ Makefile*
 # QtCtreator CMake
 CMakeLists.txt.user*
 
+*x64*
+*.vs*
+*GeneratedFiles*
