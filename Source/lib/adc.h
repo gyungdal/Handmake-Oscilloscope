@@ -4,6 +4,7 @@
 
 //ODROID ADC RANGE 0 ~ 1.8 VOLTAGE
 
+#ifdef linux
 #include <stdio.h>
 #include <inttypes.h>
 #include <fcntl.h>
@@ -67,5 +68,7 @@ class ADC {
         bool initAdc();
         adc_format_t* adc;
 };
+
+#endif
 
 #endif
