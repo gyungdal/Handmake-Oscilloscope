@@ -1,14 +1,14 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2018-03-13T18:48:15
+# Project created by QtCreator 2018-03-25T18:49:50
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui charts
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = Handmake-Oscilloscope
+TARGET = Oscilloscope
 TEMPLATE = app
 
 # The following define makes your compiler emit warnings if you use
@@ -31,6 +31,3 @@ SOURCES += \
 HEADERS += \
         mainwindow.h \
     lib/adc.h
-
-FORMS += \
-        mainwindow.ui

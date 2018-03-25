@@ -2,21 +2,26 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QtCharts>
 
-namespace Ui {
-class MainWindow;
-}
+QT_CHARTS_USE_NAMESPACE
 
-class MainWindow : public QMainWindow
-{
+class MainWindow : public QMainWindow {
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = 0);
+    typedef struct {
+        uint16_t raw : 12;
+        uint16_t reverse : 1;
+        uint16_t channel : 3;
+        double voltage;
+    } adc_item_t;
+    MainWindow(QWidget *parent = 0);
     ~MainWindow();
-
 private:
-    Ui::MainWindow *ui;
+    QChartView chart;
+    void setupChartView();
+
 };
 
 #endif // MAINWINDOW_H
