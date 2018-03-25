@@ -11,6 +11,10 @@ MainWindow::MainWindow(QWidget *parent)
 
 void MainWindow::setupChartView(){
 
+    mainLayout = new QGridLayout();
+    toolLayout = new QGridLayout();
+
+
     QLineSeries *series = new QLineSeries();
     *series << QPointF(1, 0.5) << QPointF(3, .6) << QPointF(7, -0.6) << QPointF(9, -0.7)
         << QPointF(12, .6) << QPointF(16, .7) << QPointF(18, .5);
@@ -31,9 +35,6 @@ void MainWindow::setupChartView(){
     chartView = new QChartView(chart);
     chartView->setRenderHint(QPainter::Antialiasing);
 
-    mainLayout = new QGridLayout();
-    toolLayout = new QGridLayout();
-
     scaleDial = new QDial();
     scaleDial->setMinimum(0);
     scaleDial->setMaximum(3);
@@ -44,21 +45,31 @@ void MainWindow::setupChartView(){
 
     scaleView = new QLabel();
     scaleView->setText(scaleList[0]);
+    scaleView->setAlignment(Qt::AlignCenter);
     speedView = new QLabel();
     speedView->setText("10ms");
+    speedView->setAlignment(Qt::AlignCenter);
     sampleFreqView = new QLabel();
     sampleFreqView->setText("1000/s");
+    sampleFreqView->setAlignment(Qt::AlignCenter);
+
 
     toolLayout->addWidget(scaleView, 0, 0);
-    toolLayout->addWidget(scaleDial, 0, 1);
-    toolLayout->addWidget(speedView, 0, 2);
-    toolLayout->addWidget(speedDial, 0, 3);
-    toolLayout->addWidget(sampleFreqView, 0, 4);
+    toolLayout->addWidget(scaleDial, 1, 0);
+    toolLayout->addWidget(speedView, 2, 0);
+    toolLayout->addWidget(speedDial, 3, 0);
+    toolLayout->addWidget(sampleFreqView, 4, 0);
+
 
     mainLayout->addWidget(chartView, 0, 0);
-    //mainLayout->addLayout(toolLayout, 0, 1);
+    //mainLayout->addWidget(chartView, 0, 0);
+    mainLayout->addItem(toolLayout, 0, 1);
 
-    this->setLayout(mainLayout);
+    //this->setLayout(mainLayout);
+    //this->setCentralWidget(chartView);
+    QWidget* widget = new QWidget(this);
+    widget->setLayout(mainLayout);
+    this->setCentralWidget(widget);
     this->resize(1280, 720);
 }
 
