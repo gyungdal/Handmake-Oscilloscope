@@ -11,7 +11,7 @@ bool ADC::initAdc(){
 
     this->adc = (adc_format_t*)mmap(0, getpagesize(), PROT_READ | PROT_WRITE,
 					MAP_SHARED, fd, 0x12D10000);
-	if (adc < 0) {
+    if (adc < NULL) {
 		printf("mmap failed.\n");
 		return false;
 	}

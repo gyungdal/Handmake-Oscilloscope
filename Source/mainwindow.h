@@ -22,9 +22,13 @@ public:
     MainWindow(QWidget *parent = 0);
 
     ~MainWindow();
-private:
-    QStringList scaleList;
 
+public slots:
+
+    void scaleDialEventHadler(int);
+    void speedDialEventHadler(int);
+
+private:
     //Dial
     QDial* scaleDial;
     QDial* speedDial;
@@ -40,9 +44,9 @@ private:
     QGridLayout* toolLayout;
     QGridLayout * mainLayout;
 
+    QStringList scaleList;
+
     void setupChartView();
-    void scaleDialEventHadler(int);
-    void speedDialEventHadler(int);
 };
 
 #endif // MAINWINDOW_H

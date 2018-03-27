@@ -4,9 +4,13 @@ QT_CHARTS_USE_NAMESPACE
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent) {
-    const QString temp("±1.8V,±5V,±18V,±180V");
-    scaleList = temp.split(",");
+    scaleList.append("±1.8V");
+    scaleList.append("±5V");
+    scaleList.append("±18V");
+    scaleList.append("±180V");
+
     setupChartView();
+
 }
 
 void MainWindow::setupChartView(){
@@ -69,19 +73,28 @@ void MainWindow::setupChartView(){
     //this->setCentralWidget(chartView);
     QWidget* widget = new QWidget(this);
     widget->setLayout(mainLayout);
+
+    connect(scaleDial, SIGNAL(valueChanged(int)),
+                this, SLOT(scaleDialEventHadler(int)));
+    connect(speedDial, SIGNAL(valueChanged(int)),
+                this, SLOT(speedDialEventHadler(int)));
+
     this->setCentralWidget(widget);
     this->resize(1280, 720);
 }
 
-void MainWindow::scaleDialEventHadler(int value){
-    scaleView->setText(scaleList[value]);
+void MainWindow::scaleDialEventHadler(int index){
+#ifdef DEBUG
+    fprintf(stdout, "[INFO] Scale Didal Index Change : %d", index);
+#endif
+    scaleView->setText(scaleList[index]);
 }
 
 void MainWindow::speedDialEventHadler(int value){
-    char* text = new char[50];
-    itoa(value, text, 10);
-    speedView->setText(text);
-    delete text;
+#ifdef DEBUG
+    fprintf(stdout, "[INFO] Speed Didal Index Change : %d", value);
+#endif
+    speedView->setNum(value);
 }
 
 MainWindow::~MainWindow() {
