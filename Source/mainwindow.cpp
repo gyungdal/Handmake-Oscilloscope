@@ -87,6 +87,8 @@ void MainWindow::scaleDialEventHadler(int index){
 #ifdef DEBUG
     fprintf(stdout, "[INFO] Scale Didal Index Change : %d", index);
 #endif
+    const static double list[] = {1.8, 5, 18, 180};
+    nowScale = list[index];
     scaleView->setText(scaleList[index]);
 }
 

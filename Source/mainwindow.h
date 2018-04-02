@@ -16,6 +16,7 @@ public:
         uint16_t raw : 12;
         uint16_t reverse : 1;
         uint16_t channel : 3;
+        double scale;
         double voltage;
     } adc_item_t;
 
@@ -29,6 +30,7 @@ public slots:
     void speedDialEventHadler(int);
 
 private:
+    double nowScale;
     //Dial
     QDial* scaleDial;
     QDial* speedDial;
