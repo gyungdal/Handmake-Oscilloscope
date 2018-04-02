@@ -98,7 +98,8 @@ void MainWindow::speedDialEventHadler(int value){
 }
 
 MainWindow::~MainWindow() {
-    delete chartView;
-    delete toolLayout;
-    delete mainLayout;
+    disconnect(scaleDial, SIGNAL(valueChanged(int)),
+                this, SLOT(scaleDialEventHadler(int)));
+    disconnect(speedDial, SIGNAL(valueChanged(int)),
+                this, SLOT(speedDialEventHadler(int)));
 }
