@@ -11,8 +11,10 @@ MainWindow::MainWindow(QWidget *parent)
 
     chartChannel0 = new QLineSeries();
     chartChannel0->setName("Channel 0");
+    chartChannel0->setUseOpenGL(true);
     chartChannel3 = new QLineSeries();
     chartChannel3->setName("Channel 3");
+    chartChannel3->setUseOpenGL(true);
 
     setupChartView();
 
@@ -92,6 +94,10 @@ void MainWindow::chartUpdateTest(){
     QRandomGenerator* random = new QRandomGenerator();
     chartChannel0->append(index, random->bounded(0, 2));
     chartChannel3->append(index, random->bounded(0, 2));
+    if(chartChannel0->count() > 1000){
+        chartChannel0->removePoints(0, 1);
+        chartChannel3->removePoints(0, 1);
+    }
     index++;
     chartView->repaint();
 }
