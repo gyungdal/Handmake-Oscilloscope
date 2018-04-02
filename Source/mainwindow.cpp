@@ -9,6 +9,11 @@ MainWindow::MainWindow(QWidget *parent)
     scaleList.append("±18V");
     scaleList.append("±180V");
 
+    chartChannel0 = new QLineSeries();
+    chartChannel0->setName("Channel 0");
+    chartChannel3 = new QLineSeries();
+    chartChannel3->setName("Channel 3");
+
     setupChartView();
 
 }
@@ -18,24 +23,22 @@ void MainWindow::setupChartView(){
     mainLayout = new QGridLayout();
     toolLayout = new QGridLayout();
 
-
-    QLineSeries *series = new QLineSeries();
-    *series << QPointF(1, 0.5) << QPointF(3, .6) << QPointF(7, -0.6) << QPointF(9, -0.7)
-        << QPointF(12, .6) << QPointF(16, .7) << QPointF(18, .5);
-    series->setName("Channel 0");
-
-    QLineSeries *series3 = new QLineSeries();
-    *series3 << QPointF(1, -0.5) << QPointF(2, -2) << QPointF(6, 1.3);
-    series3->setName("Channel 3");
+#ifdef TEST
+    QTimer* timer = new QTimer(this);
+    connect(timer, SIGNAL(timeout()), this, SLOT(chartUpdateTest()));
+    timer->start(1000);
+#endif
 
     QChart* chart = new QChart();
-    chart->addSeries(series);
-    chart->addSeries(series3);
+    chart->addSeries(chartChannel0);
+    chart->addSeries(chartChannel3);
     chart->setTitle("Test!");
     chart->createDefaultAxes();
     chart->axisX()->setRange(0, 20);
     chart->axisY()->setRange(-2, 2);
     chart->setTheme(QChart::ChartThemeDark);
+
+
     chartView = new QChartView(chart);
     chartView->setRenderHint(QPainter::Antialiasing);
 
@@ -82,6 +85,17 @@ void MainWindow::setupChartView(){
     this->setCentralWidget(widget);
     this->resize(1280, 720);
 }
+
+#ifdef TEST
+void MainWindow::chartUpdateTest(){
+    static int index;
+    QRandomGenerator* random = new QRandomGenerator();
+    chartChannel0->append(index, random->bounded(0, 2));
+    chartChannel3->append(index, random->bounded(0, 2));
+    index++;
+    chartView->repaint();
+}
+#endif
 
 void MainWindow::scaleDialEventHadler(int index){
 #ifdef DEBUG

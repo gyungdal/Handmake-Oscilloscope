@@ -4,6 +4,9 @@
 #include <QMainWindow>
 #include <QtCharts>
 #include <vector>
+#include <QRandomGenerator>
+
+#define TEST
 
 QT_CHARTS_USE_NAMESPACE
 
@@ -29,6 +32,9 @@ public slots:
     void scaleDialEventHadler(int);
     void speedDialEventHadler(int);
 
+#ifdef TEST
+    void chartUpdateTest();
+#endif
 private:
     double nowScale;
     //Dial
@@ -42,6 +48,9 @@ private:
 
     //Chart!
     QChartView* chartView;
+    QLineSeries* chartChannel0;
+    QLineSeries* chartChannel3;
+
 
     QGridLayout* toolLayout;
     QGridLayout * mainLayout;
@@ -49,6 +58,10 @@ private:
     QStringList scaleList;
 
     void setupChartView();
+
+#ifdef CHART_UPDATE_TEST
+
+#endif
 };
 
 #endif // MAINWINDOW_H
