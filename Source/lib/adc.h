@@ -14,6 +14,36 @@
 
 class ADC {
     public:
+        typedef enum {
+            V1_8,
+            V5,
+            V50,
+            V180
+        } adc_scale_e;
+
+        typedef struct {
+            uint16_t raw : 12;
+            uint16_t reverse : 1;
+            uint16_t channel : 3;
+            adc_scale_e scale;
+            double voltage;
+        } adc_item_t;
+
+
+        void setScale(uint8_t channel, adc_scale_e scale);
+        adc_item_t getAdc(uint8_t channel);
+
+        ADC(){
+            initAdc();
+        }
+    private:        
+        enum ADC_INDEX {
+            CON1 = 0,
+            CON2 = 1,
+            STAT = 2,
+            DATA = 3
+        };
+
         typedef struct {
             union{
                 struct{
@@ -53,18 +83,15 @@ class ADC {
                 uint32_t raw;
             };
         } adc_format_t;
-        uint16_t readAdcChannel(uint8_t);
-        ADC(){
-            initAdc();
-        }
-    private:        
-        enum ADC_INDEX {
-            CON1 = 0,
-            CON2 = 1,
-            STAT = 2,
-            DATA = 3
-        };
+
         int fd;
+        uint16_t readAdcChannel(uint8_t);
+
+        adc_scale_e channelScale[] = {
+            V1_8,
+            V1_8
+        };
+
         bool initAdc();
         adc_format_t* adc;
 };

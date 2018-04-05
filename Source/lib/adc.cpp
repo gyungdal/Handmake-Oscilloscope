@@ -33,6 +33,15 @@ bool ADC::initAdc(){
     return true;
 }
 
+
+void ADC::setScale(uint8_t channel, adc_scale_e scale){
+
+}
+
+adc_item_t ADC::getAdc(uint8_t channel){
+
+}
+
 uint16_t ADC::readAdcChannel(uint8_t channel){
     if(channel == 3 && channel == 0){
         this->adc[CON2].adc_con2.ACH_SEL = channel;

@@ -15,11 +15,18 @@ class MainWindow : public QMainWindow {
 
 public:
     //ADC Item struct
+    typedef enum {
+        V1_8,
+        V5,
+        V50,
+        V180
+    } adc_scale_e;
+
     typedef struct {
         uint16_t raw : 12;
         uint16_t reverse : 1;
         uint16_t channel : 3;
-        double scale;
+        adc_scale_e scale;
         double voltage;
     } adc_item_t;
 
@@ -56,6 +63,9 @@ private:
     QGridLayout * mainLayout;
 
     QStringList scaleList;
+
+    std::vector<adc_item_t> Channel0;
+    std::vector<adc_item_t> Channel3;
 
     void setupChartView();
 

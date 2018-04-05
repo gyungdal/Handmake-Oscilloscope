@@ -28,7 +28,7 @@ void MainWindow::setupChartView(){
 #ifdef TEST
     QTimer* timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(chartUpdateTest()));
-    timer->start(1000);
+    timer->start(1);
 #endif
 
     QChart* chart = new QChart();
@@ -36,7 +36,7 @@ void MainWindow::setupChartView(){
     chart->addSeries(chartChannel3);
     chart->setTitle("Test!");
     chart->createDefaultAxes();
-    chart->axisX()->setRange(0, 20);
+    chart->axisX()->setRange(0, 1000);
     chart->axisY()->setRange(-2, 2);
     chart->setTheme(QChart::ChartThemeDark);
 
@@ -91,12 +91,30 @@ void MainWindow::setupChartView(){
 #ifdef TEST
 void MainWindow::chartUpdateTest(){
     static int index;
-    QRandomGenerator* random = new QRandomGenerator();
-    chartChannel0->append(index, random->bounded(0, 2));
-    chartChannel3->append(index, random->bounded(0, 2));
+
+    QRandomGenerator* random = new QRandomGenerator(index);
+    if(index == 2000)
+        index = 0;
+    random->bounded(0, 2);
+
+    chartChannel0->append(index, random->generateDouble());
+    chartChannel3->append(index, random->generateDouble());
+
     if(chartChannel0->count() > 1000){
-        chartChannel0->removePoints(0, 1);
-        chartChannel3->removePoints(0, 1);
+        chartChannel0->removePoints(i % 1000, 1);
+        chartChannel3->removePoints(i % 1000, 1);
+    }
+
+    if(index == 0){
+        chartView->chart()->axisX()->setRange(index, 1000);
+    }
+    if(index > 1000){
+        chartChannel0->insert(0, index % 1000);
+        chartChannel0->append(index, random->generateDouble());
+        chartChannel3->append(index, random->generateDouble());
+
+        chartView->chart()->axisX(chartChannel0)->setRange(index, index + 1000);
+        chartView->chart()->axisX(chartChannel3)->setRange(index, index + 1000);
     }
     index++;
     chartView->repaint();
