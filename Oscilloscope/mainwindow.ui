@@ -1,24 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>MainWindow</class>
- <widget class="QMainWindow" name="MainWindow" >
-  <property name="geometry" >
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>1280</width>
+    <height>720</height>
    </rect>
   </property>
-  <property name="windowTitle" >
+  <property name="windowTitle">
    <string>MainWindow</string>
   </property>
-  <widget class="QMenuBar" name="menuBar" />
-  <widget class="QToolBar" name="mainToolBar" />
-  <widget class="QWidget" name="centralWidget" />
-  <widget class="QStatusBar" name="statusBar" />
+  <widget class="QWidget" name="centralWidget">
+   <widget class="QOpenGLWidget" name="scope">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>1200</width>
+      <height>720</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QDial" name="scaleDial">
+    <property name="geometry">
+     <rect>
+      <x>1200</x>
+      <y>120</y>
+      <width>80</width>
+      <height>80</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="scaleText">
+    <property name="geometry">
+     <rect>
+      <x>1200</x>
+      <y>200</y>
+      <width>80</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>TextLabel</string>
+    </property>
+   </widget>
+   <widget class="QDial" name="speedDial">
+    <property name="geometry">
+     <rect>
+      <x>1200</x>
+      <y>320</y>
+      <width>80</width>
+      <height>80</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="speedText">
+    <property name="geometry">
+     <rect>
+      <x>1200</x>
+      <y>400</y>
+      <width>80</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>TextLabel</string>
+    </property>
+   </widget>
+   <widget class="QDial" name="trig">
+    <property name="geometry">
+     <rect>
+      <x>1200</x>
+      <y>520</y>
+      <width>80</width>
+      <height>80</height>
+     </rect>
+    </property>
+   </widget>
+  </widget>
  </widget>
- <layoutDefault spacing="6" margin="11" />
- <pixmapfunction></pixmapfunction>
+ <layoutdefault spacing="6" margin="11"/>
  <resources/>
  <connections/>
 </ui>
