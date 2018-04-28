@@ -2,13 +2,10 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QtCharts>
 #include <vector>
 #include <QRandomGenerator>
 
 #define TEST
-
-QT_CHARTS_USE_NAMESPACE
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
