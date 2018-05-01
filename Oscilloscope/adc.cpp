@@ -1,6 +1,5 @@
-#include "adc.h"
 
-#ifdef linux
+#include "adc.h"
 
 bool ADC::initAdc(){
     if ((this->fd = open("/dev/mem", O_RDWR | O_SYNC)) < 0) {
@@ -62,4 +61,3 @@ uint16_t ADC::readAdcChannel(uint8_t channel){
         return 0;
 }
 
-#endif
