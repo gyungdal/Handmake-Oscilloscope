@@ -9,6 +9,8 @@
 
 #include "type.h"
 
+#if defined(_WIN64) || defined(_WIN32)
+
 class ADC {
     public:
         void setScale(uint8_t channel, adc_scale_e scale);
@@ -30,5 +32,29 @@ class ADC {
         bool initAdc();
         adc_format_t* adc;
 };
+#else
+    class ADC {
+        public:
+            void setScale(uint8_t channel, adc_scale_e scale);
+            adc_item_t getAdc(uint8_t channel);
+
+            ADC(){
+                initAdc();
+            }
+        private:
+
+            int fd;
+            uint16_t readAdcChannel(uint8_t);
+
+            adc_scale_e channelScale[] = {
+                V1_8,
+                V1_8
+            };
+
+            bool initAdc();
+            adc_format_t* adc;
+    };
+
+#endif
 
 #endif

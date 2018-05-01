@@ -1,6 +1,9 @@
 
 #include "adc.h"
 
+#if defined(_WIN64) || defined(_WIN32)
+
+#else
 bool ADC::initAdc(){
     if ((this->fd = open("/dev/mem", O_RDWR | O_SYNC)) < 0) {
         fprintf(stderr, "Unable to open /dev/mem\n");
@@ -61,3 +64,5 @@ uint16_t ADC::readAdcChannel(uint8_t channel){
         return 0;
 }
 
+
+#endif
