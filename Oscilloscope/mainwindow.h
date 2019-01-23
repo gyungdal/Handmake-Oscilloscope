@@ -21,9 +21,9 @@ public:
     } adc_scale_e;
 
     typedef struct {
-        uint16_t raw : 12;
         uint16_t reverse : 1;
         uint16_t channel : 3;
+        uint16_t raw : 12;
         adc_scale_e scale;
         double voltage;
     } adc_item_t;

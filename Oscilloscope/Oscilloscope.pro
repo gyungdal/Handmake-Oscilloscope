@@ -17,6 +17,7 @@ SOURCES += main.cpp\
     adc.cpp
 
 HEADERS  += mainwindow.h \
-    adc.h
+    adc.h \
+    type.h
 
 FORMS    += mainwindow.ui
