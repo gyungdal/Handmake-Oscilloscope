@@ -1,38 +1,32 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QMainWindow>
+#include <QWidget>
 
-namespace Ui {
-class MainWindow;
-}
+class Knob;
 
-class MainWindow : public QMainWindow
+class MainWindow : public QWidget
 {
     Q_OBJECT
 
 public:
+    MainWindow( QWidget * = NULL );
 
-    typedef enum {
-        V1_8,
-        V5,
-        V50,
-        V180
-    } adc_scale_e;
+    void start();
 
-    typedef struct {
-        uint16_t reverse : 1;
-        uint16_t channel : 3;
-        uint16_t raw : 12;
-        adc_scale_e scale;
-        double voltage;
-    } adc_item_t;
+    double amplitude() const;
+    double frequency() const;
+    double signalInterval() const;
 
-    explicit MainWindow(QWidget *parent = 0);
-    ~MainWindow();
+Q_SIGNALS:
+    void amplitudeChanged( double );
+    void frequencyChanged( double );
+    void signalIntervalChanged( double );
 
 private:
-    Ui::MainWindow *ui;
+    Knob *d_frequencyKnob;
+    Knob *d_amplitudeKnob;
+
 };
 
 #endif // MAINWINDOW_H

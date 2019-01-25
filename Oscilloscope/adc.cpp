@@ -13,22 +13,22 @@ bool ADC::initAdc(){
 
     this->adc = (adc_register_t*)mmap(0, getpagesize(), PROT_READ | PROT_WRITE,
                     MAP_SHARED, fd, 0x12D10000);
-    if (adc < NULL) {
+    if (reinterpret_cast<long>(this->adc) < NULL) {
         printf("mmap failed.\n");
         return false;
     }
 
-    #ifdef DEBUG
+    #if DEBUG
         fprintf(stdout, "INITAL : %X - %X\n", this->adc[CON1], this->adc[CON2]);
     #endif
 
-    this->adc[CON1].adc_con1.SOFT_RESET = 0x2;
-    this->adc[CON2].adc_con2.OSEL = 0x1;
-    this->adc[CON2].adc_con2.ESEL = 0x1;
-    this->adc[CON2].adc_con2.HIGHF = 0x1;
-    this->adc[CON2].adc_con2.C_TIME = 0x0;
+    this->adc[CON1].con1.SOFT_RESET = 0x2;
+    this->adc[CON2].con2.OSEL = 0x1;
+    this->adc[CON2].con2.ESEL = 0x1;
+    this->adc[CON2].con2.HIGHF = 0x1;
+    this->adc[CON2].con2.C_TIME = 0x0;
 
-    #ifdef DEBUG
+    #if DEBUG
         fprintf(stdout, "SETUP : %X - %X\n", this->adc[CON1] ,this->adc[CON2]);
     #endif
 
