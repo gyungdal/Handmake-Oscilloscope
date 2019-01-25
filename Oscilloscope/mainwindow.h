@@ -13,12 +13,7 @@ class MainWindow : public QWidget
 public:
     MainWindow( QWidget * = nullptr );
 
-    void start();
-
     double frequency() const;
-
-Q_SIGNALS:
-    void frequencyChanged( double );
 
 private:
     Knob *freqencyControl;

@@ -1,6 +1,6 @@
 #include "chart.h"
 Chart::Chart( QWidget *parent ):
-    QwtPlot( parent ){
+    QwtPlot( parent ), hz(0.5) {
     data3 = new QVector<double>();
     data0 = new QVector<double>();
     canvas = new QwtPlotCanvas();
@@ -8,7 +8,7 @@ Chart::Chart( QWidget *parent ):
     setTitle("Hello Oscilloscope!");
     setAutoReplot( false );
     setCanvas(this->canvas);
-    setCanvasBackground(Qt::white);
+    setCanvasBackground(Qt::black);
 
     canvas->setBorderRadius(5);
 
@@ -24,16 +24,10 @@ Chart::Chart( QWidget *parent ):
     grid->attach( this );
 
     // axes
-    //enableAxis( QwtPlot::yRight );
     setAxisTitle( QwtPlot::xBottom, "time [msec]" );
+    setAxisScale( QwtPlot::xBottom, 0, 2000000);
     setAxisTitle( QwtPlot::yLeft, "Volatage [V]" );
-    //setAxisTitle( QwtPlot::yRight, "Phase [deg]" );
     setAxisScale( QwtPlot::yLeft, -1.8, +1.8);
-
-    setAxisMaxMajor( QwtPlot::xBottom, 6 );
-    setAxisMaxMinor( QwtPlot::xBottom, 9 );
-    //setAxisScaleEngine( QwtPlot::xBottom, new QwtLogScaleEngine );
-
 
     curve0 = new QwtPlotCurve("Channel 0");
     curve0->setRenderHint( QwtPlotItem::RenderAntialiased );
@@ -48,33 +42,18 @@ Chart::Chart( QWidget *parent ):
     curve3->setLegendAttribute( QwtPlotCurve::LegendShowLine );
     curve3->setYAxis( QwtPlot::yLeft );
     curve3->attach( this );
-
-    // marker
-    marker0 = new QwtPlotMarker();
-    marker0->setLineStyle( QwtPlotMarker::HLine );
-    marker0->setLabelAlignment( Qt::AlignRight | Qt::AlignBottom );
-    marker0->setLinePen( QColor( 200, 150, 0 ), 0, Qt::DashDotLine );
-    marker0->setSymbol( new QwtSymbol( QwtSymbol::Diamond, QColor( Qt::yellow ), QColor( Qt::green ), QSize( 8, 8 ) ) );
-    marker0->attach( this );
-
-    marker3 = new QwtPlotMarker();
-    marker3->setValue( 0.0, 0.0 );
-    marker3->setLineStyle( QwtPlotMarker::VLine );
-    marker3->setLabelAlignment( Qt::AlignRight | Qt::AlignBottom );
-    marker3->setLinePen( Qt::green, 0, Qt::DashDotLine );
-    marker3->attach( this );
-
-    QVector<double> list;
     for(int i = 0;i<100;i++){
-        list.push_back(i);
         data0->push_back(fmod(rand(), 100) - 50);
         data3->push_back(fmod(rand(), 100) - 50);
     }
-    curve0->setSamples(list, *data0);
-    curve3->setSamples(list, *data3);
-    //curve3->setSamples(list, data3);
-
+    showData();
     setAutoReplot( true );
+}
+
+void Chart::frequncyUpdate(double hz){
+    this->hz = hz;
+    setAxisScale( QwtPlot::xBottom, 0, 2000000 / hz);
+    showData();
 }
 
 void Chart::clear(){
@@ -82,6 +61,13 @@ void Chart::clear(){
 }
 
 void Chart::showData(){
+    QVector<double> list;
+    for(int i = 0;i<data0->size();i++){
+        list.push_back(i * (2000 / hz));
+    }
+    curve0->setSamples(list, *data0);
+    curve3->setSamples(list, *data3);
+
 }
 void Chart::adcUpdate(){
     if(data0->size() > 5000){

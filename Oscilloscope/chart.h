@@ -15,6 +15,8 @@ class Chart: public QwtPlot
 {
     Q_OBJECT
 private:
+    double hz;
+
     //data queue
     QVector<double> *data0;
     QVector<double> *data3;
@@ -33,7 +35,8 @@ public:
     Chart(QWidget *parent = nullptr);
     void clear();
 
-public Q_SLOTS:
-    void adcUpdate(void);
+public slots:
+    void frequncyUpdate(double hz);
+    void adcUpdate();
 };
 #endif

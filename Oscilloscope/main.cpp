@@ -12,8 +12,6 @@ int main(int argc, char *argv[]){
     window.resize(screenGeometry.width(), screenGeometry.height());
     window.show();
 
-    window.start();
-
     const bool ok = app.exec();
 
     return ok;

@@ -3,17 +3,13 @@
 #include <QLabel>
 #include <QLayout>
 
-#include <qwt_scale_engine.h>
-
 MainWindow::MainWindow( QWidget *parent ):
-    QWidget( parent )
-{
-    const double intervalLength = 10.0; // seconds
+    QWidget( parent ) {
     chart = new Chart(this);
     //d_plot->setIntervalLength( intervalLength );
 
-    freqencyControl = new Knob( "Frequency [Hz]", 0.1, 20.0, this );
-    freqencyControl->setValue( 17.8 );
+    freqencyControl = new Knob( "Frequency [Hz]", 0.5, 1000.0, this );
+    freqencyControl->setValue(0.5);
 
     //Vertical
     QVBoxLayout* vLayout1 = new QVBoxLayout();
@@ -24,12 +20,7 @@ MainWindow::MainWindow( QWidget *parent ):
     layout->addLayout(vLayout1);
 
     connect(freqencyControl, SIGNAL( valueChanged( double ) ),
-        SIGNAL( frequencyChanged( double ) ) );
-}
-
-void MainWindow::start()
-{
-   // d_plot->start();
+      chart,  SLOT(frequncyUpdate( double )));
 }
 
 double MainWindow::frequency() const
