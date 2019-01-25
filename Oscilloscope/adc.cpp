@@ -59,7 +59,7 @@ adc_item_t* ADC::read(uint8_t channel){
         result->reverse = 0;
         switch(result->scale){
             case V1_8 : {
-                result->voltage = 1.8 * (result->raw / 4095);
+                result->voltage = 1.8 * (result->raw / 4095) * (-1 * result->reverse);
                 break;
             }
             default :
@@ -70,5 +70,11 @@ adc_item_t* ADC::read(uint8_t channel){
         return nullptr;
 }
 
+double ADC::readVoltage(uint8_t channel){
+    adc_item_t* result = read(channel);
+    const double voltage = result->voltage;
+    delete result;
+    return voltage;
+}
 
 #endif

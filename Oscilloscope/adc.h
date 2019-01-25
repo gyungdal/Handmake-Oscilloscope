@@ -20,6 +20,7 @@ class ADC {
             initAdc();
         }
         adc_item_t* read(uint8_t);
+        double readVoltage(uint8_t);
 };
 
 #endif

@@ -3,7 +3,8 @@
 
 #include <QWidget>
 
-class Knob;
+#include "knob.h"
+#include "chart.h"
 
 class MainWindow : public QWidget
 {
@@ -21,7 +22,7 @@ Q_SIGNALS:
 
 private:
     Knob *freqencyControl;
-
+    Chart *chart;
 };
 
 #endif // MAINWINDOW_H

@@ -9,8 +9,7 @@ MainWindow::MainWindow( QWidget *parent ):
     QWidget( parent )
 {
     const double intervalLength = 10.0; // seconds
-
-    //d_plot = new Plot( this );
+    chart = new Chart(this);
     //d_plot->setIntervalLength( intervalLength );
 
     freqencyControl = new Knob( "Frequency [Hz]", 0.1, 20.0, this );
@@ -21,8 +20,8 @@ MainWindow::MainWindow( QWidget *parent ):
     vLayout1->addWidget(freqencyControl);
 
     QHBoxLayout *layout = new QHBoxLayout( this );
-    //layout->addWidget( d_plot, 10 );
-    layout->addLayout( vLayout1 );
+    layout->addWidget(chart, 10 );
+    layout->addLayout(vLayout1);
 
     connect(freqencyControl, SIGNAL( valueChanged( double ) ),
         SIGNAL( frequencyChanged( double ) ) );
