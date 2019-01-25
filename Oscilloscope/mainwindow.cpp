@@ -1,14 +1,39 @@
 #include "mainwindow.h"
-#include "ui_mainwindow.h"
+#include "knob.h"
+#include <QLabel>
+#include <QLayout>
 
-MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::MainWindow)
+#include <qwt_scale_engine.h>
+
+MainWindow::MainWindow( QWidget *parent ):
+    QWidget( parent )
 {
-    ui->setupUi(this);
+    const double intervalLength = 10.0; // seconds
+
+    //d_plot = new Plot( this );
+    //d_plot->setIntervalLength( intervalLength );
+
+    freqencyControl = new Knob( "Frequency [Hz]", 0.1, 20.0, this );
+    freqencyControl->setValue( 17.8 );
+
+    //Vertical
+    QVBoxLayout* vLayout1 = new QVBoxLayout();
+    vLayout1->addWidget(freqencyControl);
+
+    QHBoxLayout *layout = new QHBoxLayout( this );
+    //layout->addWidget( d_plot, 10 );
+    layout->addLayout( vLayout1 );
+
+    connect(freqencyControl, SIGNAL( valueChanged( double ) ),
+        SIGNAL( frequencyChanged( double ) ) );
 }
 
-MainWindow::~MainWindow()
+void MainWindow::start()
 {
-    delete ui;
+   // d_plot->start();
+}
+
+double MainWindow::frequency() const
+{
+    return freqencyControl->value();
 }

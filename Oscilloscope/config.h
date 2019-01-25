@@ -1,6 +1,6 @@
-#ifndef CONFIG_H
-#define CONFIG_H
+#ifndef __CONFIG_H__
+#define __CONFIG_H__
 
-#define DEBUG 0
+#define DEBUG 1
 
 #endif // CONFIG_H

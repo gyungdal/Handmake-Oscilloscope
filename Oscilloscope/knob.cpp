@@ -93,3 +93,5 @@ void Knob::resizeEvent( QResizeEvent *event )
     d_knob->setGeometry( 0, d_label->pos().y() - knobHeight + off,
         sz.width(), knobHeight );
 }
+
+//SOURCE : QWT EXAMPLE

@@ -1,5 +1,5 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef __MAINWINDOW_H__
+#define __MAINWINDOW_H__
 
 #include <QWidget>
 
@@ -10,22 +10,17 @@ class MainWindow : public QWidget
     Q_OBJECT
 
 public:
-    MainWindow( QWidget * = NULL );
+    MainWindow( QWidget * = nullptr );
 
     void start();
 
-    double amplitude() const;
     double frequency() const;
-    double signalInterval() const;
 
 Q_SIGNALS:
-    void amplitudeChanged( double );
     void frequencyChanged( double );
-    void signalIntervalChanged( double );
 
 private:
-    Knob *d_frequencyKnob;
-    Knob *d_amplitudeKnob;
+    Knob *freqencyControl;
 
 };
 

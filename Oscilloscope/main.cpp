@@ -4,12 +4,17 @@
 
 int main(int argc, char *argv[]){
     QApplication app(argc, argv);
-    app.setPalette(Qt::darkCyan);
+    app.setPalette(Qt::white);
     const QScreen* screen = QGuiApplication::primaryScreen();
     const QRect screenGeometry = screen->geometry();
 
     MainWindow window;
     window.resize(screenGeometry.width(), screenGeometry.height());
     window.show();
-    return app.exec();
+
+    window.start();
+
+    const bool ok = app.exec();
+
+    return ok;
 }

@@ -24,10 +24,12 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     adc.cpp \
-    knob.cpp
+    knob.cpp \
+    chart.cpp
 
 HEADERS  += mainwindow.h \
     adc.h \
     type.h \
     config.h \
-    knob.h
+    knob.h \
+    chart.h

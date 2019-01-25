@@ -1,7 +1,7 @@
-#ifndef _KNOB_H_
-#define _KNOB_H_
+#ifndef __KNOB_H__
+#define __KNOB_H__
 
-#include <qwidget.h>
+#include <QWidget>
 
 class QwtKnob;
 class QLabel;
@@ -14,7 +14,7 @@ class Knob: public QWidget
 
 public:
     Knob( const QString &title,
-        double min, double max, QWidget *parent = NULL );
+        double min, double max, QWidget *parent = nullptr);
 
     virtual QSize sizeHint() const;
 
