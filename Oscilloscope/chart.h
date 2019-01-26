@@ -9,14 +9,16 @@
 #include <qwt_symbol.h>
 #include <qwt_plot_canvas.h>
 #include <QVector>
+#include <utility>
+
 #include "type.h"
+#include "adc.h"
 
 class Chart: public QwtPlot
 {
     Q_OBJECT
 private:
     double hz;
-
     //data queue
     QVector<double> *data0;
     QVector<double> *data3;
@@ -37,6 +39,6 @@ public:
 
 public slots:
     void frequncyUpdate(double hz);
-    void adcUpdate();
+    void adcUpdate(std::pair<double, double>);
 };
 #endif

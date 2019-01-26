@@ -9,7 +9,7 @@ bool ADC::initAdc(){
         #if DEBUG
             fprintf(stderr, "Unable to open /dev/mem\n");
         #endif
-        return false;
+        exit(-1);
     }
 
 
@@ -17,7 +17,7 @@ bool ADC::initAdc(){
                     MAP_SHARED, fd, 0x12D10000));
     if (reinterpret_cast<long>(this->adc) < 0) {
         printf("mmap failed.\n");
-        return false;
+        exit(-1);
     }
 
     #if DEBUG
@@ -70,11 +70,18 @@ adc_item_t* ADC::read(uint8_t channel){
         return nullptr;
 }
 
+std::pair<double, double> ADC::readAllVoltages(){
+    return std::make_pair(readVoltage(0), readVoltage(3));
+}
+
 double ADC::readVoltage(uint8_t channel){
     adc_item_t* result = read(channel);
-    const double voltage = result->voltage;
-    delete result;
-    return voltage;
+    if(result != nullptr){
+        const double voltage = result->voltage;
+        delete result;
+        return voltage;
+    }
+    return 0;
 }
 
 #endif

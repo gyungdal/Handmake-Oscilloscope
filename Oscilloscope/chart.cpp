@@ -20,7 +20,7 @@ Chart::Chart( QWidget *parent ):
     QwtPlotGrid *grid = new QwtPlotGrid;
     grid->enableXMin( true );
     grid->setMajorPen( Qt::white, 0, Qt::DotLine );
-    //grid->setMinorPen( Qt::gray, 0 , Qt::DotLine );
+    grid->setMinorPen( Qt::gray, 0 , Qt::DotLine );
     grid->attach( this );
 
     // axes
@@ -57,7 +57,8 @@ void Chart::frequncyUpdate(double hz){
 }
 
 void Chart::clear(){
-
+    data3->clear();
+    data0->clear();
 }
 
 void Chart::showData(){
@@ -69,8 +70,14 @@ void Chart::showData(){
     curve3->setSamples(list, *data3);
 
 }
-void Chart::adcUpdate(){
-    if(data0->size() > 5000){
-
+void Chart::adcUpdate(std::pair<double, double> item){
+    if(data0->size() > 1000){
+        data0->pop_front();
     }
+    if(data3->size() > 1000){
+        data3->pop_front();
+    }
+    data0->push_back(item.first);
+    data3->push_back(item.second);
+    showData();
 }
