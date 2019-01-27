@@ -12,7 +12,6 @@
 #include <utility>
 
 #include "type.h"
-#include "adc.h"
 
 class Chart: public QwtPlot
 {

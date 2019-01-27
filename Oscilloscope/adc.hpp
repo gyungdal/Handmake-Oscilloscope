@@ -1,5 +1,5 @@
-#ifndef __ADC_H__
-#define __ADC_H__
+#ifndef __ADC_HPP__
+#define __ADC_HPP__
 //ODROID ADC RANGE 0 ~ 1.8 VOLTAGE
 
 #include <cstdlib>
@@ -8,33 +8,34 @@
 #include <unistd.h>
 #include <sys/mman.h>
 #include <utility>
+#include <QThread>
+
 #include "config.h"
 #include "type.h"
 
-class ADC {
+class ADC : public QThread{
+    Q_OBJECT
     private:
         int fd;
         adc_register_t* adc;
         bool initAdc();
-    public:
-        static ADC& getInstance(){
-            static ADC instance;
-            return instance;
-        }
+        void run();
 
-        adc_item_t* read(uint8_t);
-        std::pair<double, double> readAllVoltages();
-        double readVoltage(uint8_t);
-    private:
-        ADC(){
-            initAdc();
-        }
+    public:
+        explicit ADC(QObject *parent = nullptr);
         ~ADC(){
-            munmap(adc, getpagesize());
+            munmap(adc, static_cast<size_t>(getpagesize()));
             close(fd);
         }
         ADC(const ADC&)= delete;
         ADC& operator=(const ADC&)= delete;
+        adc_item_t* read(uint8_t);
+        double readVoltage(uint8_t);
+
+    signals:
+        void readAllVoltages(std::pair<double, double>);
+    public slots:
+
 };
 
 #endif

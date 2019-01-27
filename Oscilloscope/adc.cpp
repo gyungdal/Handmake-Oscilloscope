@@ -1,9 +1,15 @@
 
-#include "adc.h"
+#include "adc.hpp"
 
 #if defined(_WIN64) || defined(_WIN32)
 
 #else
+
+ADC::ADC(QObject *parent) :
+    QThread(parent){
+    initAdc();
+}
+
 bool ADC::initAdc(){
     if ((this->fd = open("/dev/mem", O_RDWR | O_SYNC)) < 0) {
         #if DEBUG
@@ -13,8 +19,10 @@ bool ADC::initAdc(){
     }
 
 
-    this->adc = reinterpret_cast<adc_register_t*>(mmap(0, getpagesize(), PROT_READ | PROT_WRITE,
-                    MAP_SHARED, fd, 0x12D10000));
+    this->adc = reinterpret_cast<adc_register_t*>(
+                    mmap(0, getpagesize(), PROT_READ | PROT_WRITE,
+                    MAP_SHARED, fd, 0x12D10000)
+                );
     if (reinterpret_cast<long>(this->adc) < 0) {
         printf("mmap failed.\n");
         exit(-1);
@@ -40,7 +48,7 @@ bool ADC::initAdc(){
 }
 
 adc_item_t* ADC::read(uint8_t channel){
-    if(channel == 3 | channel == 0){
+    if(channel == 3 || channel == 0){
         adc_item_t* result = new adc_item_t;
         this->adc[CON2].con2.ACH_SEL = channel;
         this->adc[CON1].con1.STC_EN = 0x1;
@@ -69,9 +77,11 @@ adc_item_t* ADC::read(uint8_t channel){
     }else
         return nullptr;
 }
-
-std::pair<double, double> ADC::readAllVoltages(){
-    return std::make_pair(readVoltage(0), readVoltage(3));
+void ADC::run(){
+    while(true){
+        const std::pair<double, double> data = std::make_pair(readVoltage(0), readVoltage(3));
+        emit readAllVoltages(data);
+    }
 }
 
 double ADC::readVoltage(uint8_t channel){

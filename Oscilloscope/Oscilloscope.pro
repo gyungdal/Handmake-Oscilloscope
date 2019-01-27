@@ -28,8 +28,8 @@ SOURCES += main.cpp\
     chart.cpp
 
 HEADERS  += mainwindow.h \
-    adc.h \
     type.h \
     config.h \
     knob.h \
-    chart.h
+    chart.h \
+    adc.hpp
